@@ -1,0 +1,18 @@
+import pandas as pd
+
+#dataUsers = pd.read_csv("Dataset/PP_users.csv");
+#dataRecipes = pd.read_csv("Dataset/PP_recipes.csv")
+
+#print(dataUsers.head());
+dataRawUsers = pd.read_csv("Dataset/interactions_test.csv", nrows=15);
+print(dataRawUsers[['recipe_id','rating']])
+
+#for row in dataRawUsers:
+sumReviews = dataRawUsers.groupby('recipe_id')['rating'].agg(['sum', 'count']);
+AverageValues = dataRawUsers.aggregate({'rating':['sum', 'count']});
+AverageValue = AverageValues.iloc[0] / AverageValues.iloc[1];
+print(AverageValue)
+sumReviews['average'] =0.0;
+sumReviews['average'] = sumReviews['sum'] / sumReviews['count'];
+
+print(sumReviews)
